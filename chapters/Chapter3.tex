@@ -1,9 +1,6 @@
 
-\فصل{نتایج جدید}
-در این فصل نتایج جدید به‌دست‌آمده در پایان‌نامه توضیح داده می‌شود.
-در صورت نیاز می‌توان نتایج جدید را در قالب چند فصل ارائه نمود.
-همچنین در صورت وجود پیاده‌سازی، بهتر است نتایج پیاده‌سازی را 
-در فصل مستقلی پس از این فصل قرار داد.
+\فصل{نتایج اخیر}
+در این فصل به معرفی برخی از روش های مدرن در یادگیری تقویتی می پردازیم. روش های معرفی شده در این فصل به دو دسته کلی مبتنی بر مدل و بدون مدل تقسیم می شوند. تفاوت اصلی این روش های در این است که آیا در الگوریتم یادگیری از تابع انتقال MDP یا تخمینی از آن استفاده می شود یا خیر. در روش های بدون مدل، عامل هیچ اطلاعی از دینامیک محیط ندارد و تنها از طریق تجربه می تواند بیاموزد. در مقابل روش های مبتنی بر مدل دسترسی کامل یا تقریبی به تابع انتقال را مفروض می گیرند. البته برخی از روش های مبتنی بر مدل می توانند از طریق تجربه تخمینی از دینامیک محیط را یاد بگیرند.
 
 
 \قسمت{روش\nf های مبتنی بر مدل و بدون مدل}
@@ -348,29 +345,30 @@ $$a(s) = arg \max_a Q_{\theta}(s,a)$$.
 
 \قسمت{روش DQN}
 
-در جامعه یادگیری تقویتی ، به طور معمول یک عملکرد خطی است
-تقریبی ، اما گاهی اوقات از یک تقریب عملکرد غیر خطی به جای آن ، مانند یک شبکه عصبی استفاده می شود معمولا به شبکه عصبی با وزن θ به عنوان یک شبکه Q اشاره می کنیم.
-شبکه Q را می توان با به کمینه ساختن دنباله ای از توابع هزینه به شکل 
-$L_i{\theta_i}$
- که در گام یک تغییر می کند ، آموزش داد
+معمولا برای تقریب زدن توابع ارزش در یادگیری تقویتی، از یک تابع خطی استفاده می شود.
+اما گاهی اوقات از یک تقریب عملکرد غیر خطی به جای آن ، مانند یک شبکه عصبی استفاده می شود. شبکه های عصبی با عنوان شبکه Q\پاورقی{Q-Network} شناخته می شوند.
+شبکه Q را می توان با کمینه ساختن دنباله ای از توابع هزینه به شکل 
+$L_1(\theta_1), L_2(\theta_2), L_3(\theta_3), ... $
+
+ آموزش داد؛ به طوری که
 
 $$L_i(\theta_i)=\mathbb{E}\left[(y_i - Q(s,a;\theta_i))^2\right]$$
 
 که 
-$y_i = \mathbb{E}[r + \gamma \max_{a'} Q(s',a'; \theta_{i-1})| s,a]$.
+$$y_i = \mathbb{E}[r + \gamma \max_{a'} Q(s',a'; \theta_{i-1})| s,a]$$.
 
-با مشتق گرفتن از تابع هزینه نسبت به پارامترهای شبکه عصبی $\theta_i$ خواهیم داشت
+با مشتق گرفتن از تابع هزینه نسبت به پارامترهای
+$\theta_i$
+ خواهیم داشت
 
 $$\nabla_{\theta_i} L_i{\theta_i} = \mathbb{E}\left[ \left(r + \gamma \max{a'} Q(s',a';\theta_{i-1}) - Q(s,a;\theta_i)\right) \nabla_{\theta_i} Q(s,a;\theta_i)\right]$$
 
-Rather than computing the full expectations in the above gradient, it is often computationally expedient to optimise the loss function by stochastic gradient descent. If the weights are updated after
-every time-step, and the expectations are replaced by single samples from the behaviour distribution
-ρ and the emulator E respectively, then we arrive at the familiar Q-learning algorithm [26].
-Note that this algorithm is model-free: it solves the reinforcement learning task directly using samples from the emulator E, without explicitly constructing an estimate of E. It is also off-policy: it
-learns about the greedy strategy a = maxa Q(s, a; θ), while following a behaviour distribution that
-ensures adequate exploration of the state space. In practice, the behaviour distribution is often selected by an -greedy strategy that follows the greedy strategy with probability 1 −  and selects a
-random action with probability \epsilon
-به جای محاسبه امیدریاضی کامل در گرادیان فوق ، غالباً از نظر محاسباتی بهینه سازی تابع هزینه با نزول گرادیان تصادفی  \پاورقی{stochastic gradient descend} ممکن است. اگر در هر مقطع زمانی، وزن ها به روزرسانی شود و امیدریاضی با یک نمونه از توزیع خط مشی رفتار \پاوقی{behavior policy} جایگزین شود، الگوریتم Q-learning به شکل زیر خواهد بود.
+%Rather than computing the full expectations in the above gradient, it is often computationally expedient to optimise the loss function by stochastic gradient descent. If the weights are updated after
+%every time-step, and the expectations are replaced by single samples from the behaviour distribution
+%ρ and the emulator E respectively, then we arrive at the familiar Q-learning algorithm [26].
+
+
+به جای محاسبه امیدریاضی کامل در گرادیان فوق ، غالباً از نظر محاسباتی، بهینه سازی تابع هزینه با نزول گرادیان تصادفی  \پاورقی{stochastic gradient descend} راه حل بهتری است. اگر در هر مقطع زمانی، وزن ها به روزرسانی شود و امیدریاضی با یک نمونه از توزیع خط مشی رفتار \پاورقی{behavior policy} جایگزین شود، الگوریتم Q-learning به شکل زیر خواهد بود.
 
 \شروع{الگوریتم}{الگوریتم Q-learning با Experience replay}
 
@@ -379,14 +377,14 @@ random action with probability \epsilon
 	$D$
 را مقدار دهی اولیه کن}
 \دستور{تابع عمل-ارزش Q را با وزن های تصادفی مقداردهی اولیه کن}
-\‌به‌ازای{برای هر اپیزود 
+\به‌ازای{برای هر اپیزود 
 $1...M$}
 \دستور{دنباله 
 	$d_1 = \{S_1\}$
 	 و کدینگ 
 	 $\phi_1 = \phi(d_1)$
 	  را مقداردهی اولیه کن}
-  \‌به‌ازای{برای $t=1...T$}
+\به‌ازای{برای $t=1...T$}
 \دستور{با احتمال $\epsilon$ یک عمل تصادفی $a_t$ را انتخاب کن، در غیر این صورت 
 	$a_t = \max_{a} Q^*(\phi(d_t),a;\theta)$
 	 را انتخاب کن}
@@ -410,13 +408,20 @@ $1...M$}
  		 &
  		  $\phi_{j+1} \  terminal$ \\
  		$r_j$ & $otherwise$
- 	\end{cases}}}
+ 	\end{cases}}
+}
 \دستور{یک گام از نزول گرادیان را برای تابع هزینه 
 	$(y_j - Q(\phi_j, a_j; \theta))^2$
 	 انجام بده}
   \پایان‌به‌ازای
 \پایان‌به‌ازای
 \پایان{الگوریتم}
+
+%Note that this algorithm is model-free: it solves the reinforcement learning task directly using samples from the emulator E, without explicitly constructing an estimate of E. It is also off-policy: it
+%learns about the greedy strategy a = maxa Q(s, a; θ), while following a behaviour distribution that
+%ensures adequate exploration of the state space. In practice, the behaviour distribution is often selected by an -greedy strategy that follows the greedy strategy with probability 1 −  and selects a
+%random action with probability \epsilon
+
 توجه داشته باشید که این یک الگوریتم بدون مدل است: این کار وظیفه یادگیری تقویتی را مستقیماً با استفاده از نمونه های شبیه ساز E بدون ساختن صریح تخمین E. حل می کند.
 در مورد استراتژی حریص a = maxa Q (s ، a؛ θ) یاد می گیرد ، در حالی که توزیع رفتاری را دنبال می کند که
 کاوش کافی در فضای دولت را تضمین می کند. در عمل ، توزیع رفتار اغلب توسط یک استراتژی Greed انتخاب می شود که استراتژی حریصانه را با احتمال 1 دنبال می کند - و یک
@@ -453,7 +458,7 @@ correlations between samples; 2. the network is trained with a target Q network 
 targets during temporal difference backups. In this work we make use of the same ideas, along with
 batch normalization (Ioffe & Szegedy, 2015), a recent advance in deep learning.
 
-\شروع{الگوریتم}[الگوریتم DDPG]
+\شروع{الگوریتم}{الگوریتم DDPG}
 \دستور{پارامترهای 
 	$\theta_\mu$
 	 و 
@@ -520,3 +525,20 @@ See World Models for an example of using purely fictitious experience to train t
 Embedding Planning Loops into Policies. Another approach embeds the planning procedure directly into a policy as a subroutine—so that complete plans become side information for the policy—while training the output of the policy with any standard model-free algorithm. The key concept is that in this framework, the policy can learn to choose how and when to use the plans. This makes model bias less of a problem, because if the model is bad for planning in some states, the policy can simply learn to ignore it.
 
 See I2A for an example of agents being endowed with this style of imagination.
+
+
+\قسمت{روش مدل جهان}
+%Our world model can be trained quickly in an unsupervised manner to learn a compressed spatial and temporal representation of the environment. By using features extracted from the world model as inputs to an agent, we can train a very compact and simple policy that can solve the required task. We can even train our agent entirely inside of its own dream environment generated by its world model, and transfer this policy back into the actual environment.
+مدل جهانی می تواند به سرعت و به روشی بدون نظارت آموزش ببیند تا یک بازنمایی از محیط را بیاموزد. سپس با استفاده از ویژگی های استخراج شده از مدل جهان به عنوان ورودی به یک عامل ، می توان یک خط مشی ساده و فشرده را آموخت که می تواند وظیفه مورد نیاز را حل کند. حتی می توانیم عامل را کاملاً در داخل محیط رویایی خود که توسط مدل جهانی آن ایجاد شده ، آموزش دهیم و این خط مشی آموخته شده را به محیط واقعی انتقال دهیم.
+
+%In many reinforcement learning (RL) problems [15, 16, 17], an artificial agent also benefits from having a good representation of past and present states, and a good predictive model of the future [18, 19], preferably a powerful predictive model implemented on a general purpose computer such as a recurrent neural network (RNN)
+
+در بسیاری از مسائل یادگیری تقویتی، یک عامل مصنوعی نیز از داشتن نمایش خوبی از حالات گذشته و حال و مدل پیش بینی خوبی از آینده، ترجیحاً یک پیش بینی قدرتمند سود می برد. مثلا مدل پیاده سازی شده بر روی یک شبکه عصبی بازگشتی.
+ \پاورقی
+ {Recurrent Neural Network}
+
+%Most existing model-based RL[29, 30] approaches learn a model of the RL environment, but still train on the actual environment. Here, we also explore fully replacing an actual RL environment with a generated one, training our agent’s controller only inside of the environment generated by its own internal world model, and transfer this policy back into the actual environment.
+
+اکثر رویکردهای مبتنی بر مدل موجود در یادگیری تقویتی، مدلی از محیط را یاد می گیرند، اما همچنان در محیط واقعی آموزش می بینند. در این روش، ما همچنین می توانیم یک محیط  مصنوعی را کاملاً جایگزین محیط واقعی ، کنیم و خط مشی عامل خود را فقط در داخل محیط تولید شده توسط مدل جهان آموزش دهیم و نهایتا خط مشی آموخته شده را به محیط واقعی انتقال دهیم.
+
+We present a simple model inspired by our own cognitive system. In this model, our agent has a visual sensory component that compresses what it sees into a small representative code. It also has a memory component that makes predictions about future codes based on historical information. Finally, our agent has a decision-making component that decides what actions to take based only on the representations created by its vision and memory components.

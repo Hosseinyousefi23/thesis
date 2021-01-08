@@ -1,0 +1,338 @@
+
+\فصل{مفاهیم اولیه یادگیری تقویتی}
+
+اصطلاح کنترل بهینه در اواخر دهه 1950 برای توصیف مسئله طراحی یک کنترل گر برای به حداقل رساندن اندازه گیری رفتار سیستم پویا در طول زمان مورد استفاده قرار گرفت. یکی از رویکردهای این مسئله در اواسط دهه 1950 توسط ریچارد بلمن و دیگران از طریق گسترش نظریه قرن نوزدهم همیلتون و جاکوبی توسعه یافت. این رویکرد از مفاهیم حالت یک سیستم پویا و یک تابع ارزش برای تعریف یک معادله تابعی استفاده می کند، که اکنون با نام معادله بلمن نامیده می شود. کلاس روش های حل مسائل کنترل بهینه با حل این معادله به عنوان برنامه نویسی پویا شناخته می شود. همچنین نسخه تصادفی گسسته از مسئله کنترل بهینه را که تحت عنوان فرایندهای تصمیم گیری مارکوف (MDP) شناخته می شود ، معرفی کرد و رونالد هوارد (1960) روش
+\lr{Policy Iteration}
+  را برای MDP ها طراحی کرد. همه اینها عناصر اساسی در تئوری و الگوریتم های یادگیری تقویتی مدرن هستند.
+  در این فصل، یا فرایندهای تصمیم گیری مارکوف آشنا خواهیم شد و چهار عنصر اصلی یادگیری تقویتی، یعنی خط مشی، سیگنال پاداش، تابع ارزش و محیط را دقیقا تعریف خواهیم کرد. همچنین برخی روش های کلاسیک در یادگیری تقویتی را معرفی می کنیم.
+
+%----------------------------- مقدمه ----------------------------------
+
+
+\قسمت{فرایند تصمیم\nf گیری مارکوف}
+
+یادگیری تقویتی از چارچوب رسمی فرایندهای تصمیم گیری مارکوف (MDP) برای تعریف تعامل بین یک عامل یادگیری و محیط آن توسط حالت ها ، اقدامات و پاداش استفاده می کند. مدل MDP یک مدل کلاسیک از تصمیم گیری متوالی است ، جایی که اقدامات نه تنها بر پاداش های فوری ، بلکه همچنین بر موقعیت‌ها و حالت‌های بعدی و از طریق آن پاداش های آینده تأثیر می‌گذارد.
+MDP یک فرم ایده آل ریاضی از مسئله یادگیری تقویتی است که می توان برای آن تئوری‌های دقیقی بیان کرد
+یک MDP متناهی ، یک MDP با مجموعه حالت‌های محدود است. بیشتر نظریه‌های فعلی یادگیری تقویتی محدود به MDP متناهی است ، اما روش ها و ایده ها به طور کلی بیان می شوند.
+
+
+%[Szepesvari2010]
+\شروع{تعریف}[فرایند تصمیم گیری مارکوف] 
+یک فرایند تصمیم گیری مارکوف
+MDP
+، 4 تایی 
+$$\EuScript{M} = \seq{\EuScript{S},\EuScript{A},\EuScript{R},\EuScript{P}}$$
+است که
+\شروع{فقرات}
+\فقره $\EuScript{S}$ بیانگر مجموعه تمام \مهم{حالت}\nf هاست
+\فقره $\EuScript{A}$ بیانگر مجموعه تمام \مهم{عمل}\nf هاست
+\فقره{
+	$\EuScript{R} \subseteq \IR$
+	بیانگر مجموعه پاداش هاست
+}
+\فقره 
+$\EuScript{P}$
+\مهم{هسته احتمال انتقال}
+$ \EuScript{P}: \EuScript{S} \times \EuScript{A} \to \Pi(\EuScript{S} \times \EuScript{R})$
+تابعی است که دینامیک MDP را مشخص می کند.
+
+\پایان{فقرات}
+
+\پایان{تعریف}
+هسته احتمال انتقال یا تابع انتقال $\EuScript{P}$، هر دوتایی حالت-عمل
+$(s,a)$
+که 
+$s \in \EuScript{S}$
+و
+$a \in \EuScript{A}$
+را به یک توزیع احتمال روی دوتایی هایی به شکل 
+$(s',r)$
+نسبت می دهد که $s'$ بیانگر حالت بعدی و $r$ بیانگر پاداش این انتقال است. به ازای هر دو حالت 
+$s,s' \in \EuScript{S}$
+ و هر عمل 
+ $a \in \EuScript{A}$
+  و هر پاداش 
+  $r \in \EuScript{R}$
+  احتمال رسیدن به حالت $s'$ و دریافت پاداش $r$ با انتخاب عمل $a$ در حالت $s$، یک عدد حقیقی بین صفر و یک (با احتساب خود صفر و یک) است که آن را به شکل
+$p(s',r|s,a)$
+نمایش می دهیم:
+
+$$p(s',r|s,a) \triangleq Pr\{S_t=s',R_t=r|S_{t-1}=s,A_{t-1}=a\}$$
+
+نامگذاری فرایند تصمیم گیری مارکوف اشاره به این موضوع دارد که این سیستم\nf ها دارای \مهم{ویژگی مارکوف} هستند، بدین معنا که تابع انتقال تنها به حالت فعلی سیستم و آخرین عمل وابسته اند و نسبت به حالت\nf ها و اعمال قبل از آن مستقل هستند.
+
+
+
+\قسمت{خط مشی}
+خط مشی نحوه رفتار عامل یادگیری را در یک زمان خاص، مشخص می کند. خط مشی، هسته اصلی یک عامل یادگیری تقویت کننده است به این معنا که به تنهایی برای تعیین رفتار کافی است. به طور تقریبی ، یک خط مشی، نگاشت از حالت های مدل شده از محیط به اقداماتی است که باید در آن حالت انجام شود.
+خط مشی ممکن است یک عملکرد ساده یا جدول جستجو باشد ، یا ممکن است شامل محاسبات پیچیده‌ای مانند فرآیند جستجو باشد
+خط مشی ها ممکن است تصادفی باشند.
+
+\شروع{تعریف}[خط\nf مشی احتمالاتی ثابت]
+%[Szepesvari2010]
+یک خط\nf مشی احتمالاتی ثابت (یا به طور خلاصه خط\nf مشی ثابت) 
+$\pi: S \to \Pi(A)$
+حالت\nf ها را به توزیع احتمال روی فضای عمل می\nf نگارد.
+به طور خلاصه احتمال انتخاب عمل $a$ از حالت $s$ را با
+$\pi(a|s)$
+نشان می\nf دهیم.
+
+\پایان{تعریف}
+
+می\nf گوییم خط\nf مشی $\pi$ در یک MDP \مهم{دنبال می\nf شود} هرگاه
+$$A_t \sim \pi(. |X_t),	 \quad t \in \IN$$
+
+\قسمت{سیگنال پاداش}
+
+یک سیگنال پاداش هدف را در یک مسئله یادگیری تقویت کننده تعریف می کند. در هر مرحله ، محیط یک عدد حقیقی به نام پاداش برای عامل یادگیری تقویتی ارسال می کند. تنها هدف عامل، به حداکثر رساندن کل پاداش دریافتی در طولانی مدت است. سیگنال پاداش مشخص می کند که اتفاقات خوب و بد برای عامل چیست. این مبنای اصلی تغییر خط مشی است.
+سیگنال پاداش می‌تواند تابعی تصادفی از وضعیت محیط و اقدام انجام شده باشند.
+
+
+\قسمت{عایدی و تابع ارزش}
+در حالی که سیگنال پاداش نشان می دهد که چه عملی خوب است، یک تابع ارزش مشخص می\nf کند که چه چیزی در طولانی مدت خوب است. این نشانگر مطلوبیت طولانی مدت حالت‌ها پس از در نظر گرفتن حالت‌هایی است که احتمالاً در پی خواهند داشت.
+ارزش یک حالت، کل میزان پاداشی است که عامل می تواند انتظار داشته باشد در آینده کسب کند، اگر از آن حالت شروع کند.
+پاداش ها به یک معنا اولیه هستند، در حالی که ارزش ها، به عنوان پیش بینی پاداش ها، ثانویه هستند. بدون پاداش هیچ مقداری وجود ندارد و تنها هدف از برآورد ارزش ها، دستیابی به پاداش بیشتر است. با این وجود ، این تابع ارزش است که هنگام تصمیم گیری و ارزیابی بیشتر به آن توجه می کنیم.
+تعیین ارزش‌ بسیار دشوارتر از تعیین پاداش است
+ارزش‌ها باید از توالی مشاهداتی که یک عامل در طول عمر خود انجام می دهد ، تخمین زده و مجدداً برآورد شوند.
+مهمترین مولفه تقریباً همه الگوریتم‌های یادگیری تقویتی که در نظر می گیریم، روشی برای تخمین کارآمد تابع ارزش است.
+
+\شروع{تعریف}[عایدی ]
+\مهم{عایدی تخفیف دار آینده}\پاورقی{Future Expected Return} یا به اختصار، عایدی، در زمان $t$ به شکل
+
+$$G_t \triangleq \sum_{t'=t}^{T} \gamma^{t'-t} R_{t'}$$
+تعریف می شود که $T$ زمانی است که اپیزود به اتمام می رسد. اگر مسئله ادامه دار باشد آنگاه 
+$T=\infty$
+\پایان{تعریف}
+
+از تعریف بالا نتیجه می شود 
+$G_t = R_t + \sum_{t'=t+1}^{T} \gamma^{t'-t} R_{t'} \\
+= R_t + \gamma \sum_{t'=t+1}^{T} \gamma^{t' - (t+1)} r_{t'} \\
+= R_t + \gamma G_{t+1} \\
+$
+
+\شروع{تعریف}[تابع ارزش حالت]
+
+ ارزش حالت $s$ تحت خط مشی $\pi$ یا $v_\pi(s)$ به شکل امیدریاضی عایدی، با شروع از $s$ و دنبال کردن خط مشی $\pi$ تعریف می شود.
+$$v_\pi(s) = \mathbb{E}_\pi\left[G_t| S_t=s\right] = \mathbb{E}_\pi\left[\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}|S_t =s \right]$$
+تابع $v_\pi$ را 
+\textit{تابع ارزش حالت}
+\پاورقی{State Value Function} مربوط به خط مشی 
+$\pi$
+می نامیم.
+\پایان{تعریف}
+
+\شروع{تعریف}[تابع ارزش عمل]
+
+ارزش عمل  $a$ در حالت
+$s$
+ تحت خط مشی $\pi$ یا 
+ $q_\pi(s,a)$
+  به شکل امیدریاضی عایدی، با شروع از $s$ و انتخاب عمل $a$  و سپس دنبال کردن خط مشی $\pi$ تعریف می شود.
+$$q_\pi(s,a) = \mathbb{E}_\pi\left[G_t| S_t=s, A_t=a\right] = \mathbb{E}_\pi\left[\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}|S_t =s, A_t=a \right]$$
+تابع $q_\pi$ را 
+\textit{تابع ارزش عمل}
+\پاورقی{Action Value Function} مربوط به خط مشی 
+$\pi$
+می نامیم.
+\پایان{تعریف}
+
+
+
+\قسمت{محیط}
+مدل محیط چیزی است که رفتار محیط را تقلید می کند، یا به طور کلی تر، اجازه می دهد تا در مورد نحوه رفتار محیط، پیشبینی کارامدی داشته باشیم. از مدلها برای برنامه ریزی استفاده می شود، یعنی هر نوع تصمیم گیری در مورد روند کار با در نظر گرفتن شرایط احتمالی آینده قبل از تجربه واقعی آنها.
+روش‌هایی که برای حل مشکلات یادگیری تقویتی از مدلها و برنامه ریزی‌ها استفاده می کنند، روشهای مبتنی بر مدل نامیده می شوند ، در مقابل روشهای بدون مدل هستند که همگی آزمایش و خطا هستند.
+
+\قسمت{خط\nf مشی و تابع ارزش بهینه}
+برای MDP های متناهی، می\nf توانیم خط\nf مشی بهینه را به صورت زیر تعریف کنیم
+\شروع{تعریف}
+می\nf گوییم خط\nf مشی $\pi$ \مهم{بهتر یا مساوی} خط\nf مشی 
+$\pi'$
+است و می\nf نویسیم 
+$\pi \ge \pi'$
+هرگاه برای هر 
+$s \in \mathcal{S}$
+$$v_\pi(s) \ge v_{\pi'}(s)$$
+\پایان{تعریف}
+
+
+می\nf توان نشان داد که حداقل یک خط\nf مشی وجود دارد که بهتر یا مساوی هر خط\nf مشی دیگری باشد
+\cite{suttonbook}
+. به چنین خط\nf مشی\nf ای \مهم{خط\nf مشی بهینه} گفته می\nf شود. ممکن است بیش از یک خط\nf مشی بهینه وجود داشته باشد ولی تابع ارزش متناظر با همه خط\nf مشی \nf های بهینه یکسان است و برابر با تابع ارزش بهینه است که با نماد $v_*$ نمایش داده شده و به شکل زیر تعریف می\nf شود. برای هر $s \in S$
+
+$$v_*(s) \triangleq \max_{\pi} v_\pi(s)$$
+
+
+همچنین تمام خط\nf مشی\nf های بهینه تابع عمل-ارزش مشترکی دارند که آن را با نماد $q_*$ نمایش می\nf دهیم و به شکل زیر تعریف می\nf شود. برای هر دوتایی حالت عمل $(s,a)$ که $s \in S$ و $a \in A(s)$
+
+$$q_*(s,a) \triangleq max_{\pi} q_\pi(s,a)$$
+
+می\nf توانیم $q_*$ را برحسب $v_*$ به شکل زیر بنویسیم
+$$ q_* (s,a) = \mathbb{E}[R_{t+1} + \gamma v_*(S_{t+1})| S_t=s, A_t=a]$$
+
+
+\قسمت{معادله بلمن}
+ویژگی اساسی توابع ارزشی که در طول یادگیری تقویتی و برنامه نویسی پویا استفاده می شود این است که آنها در روابطی بازگشتی صدق می‌کنند. معادلات بلمن رابطه ای بین ارزش یک حالت و ارزش‌های حالت‌های بعدی آن را بیان می کند
+
+$$v_\pi (s) \triangleq \mathbb{E}_\pi [G_t | S_t = s]$$
+$$= \mathbb{E}_\pi [R_{t+1}+ \gamma G_{t+1}|S_t=s]$$
+$$=\sum_{a} \pi(a|s) \sum_{s'}\sum_{r} p(s',r|s,a)[r+\gamma \mathbb{E}_\pi[G_{t+1}|S_{t+1}=s']]$$
+$$=\sum_{a} \pi(a|s) \sum_{s',r} p(s',r|s,a)[r+\gamma v_\pi(s')] \quad \forall s \in \mathbb(S)$$
+
+
+
+\قسمت{بهینگی و معادله بهینگی بلمن}
+
+
+$$ v_*(s)= \max_{a \in \mathbb{A}(s)} q_{\pi_*}(s,a) = \max_{a} \mathbb{E}_{\pi_*} [G_t|S_t=s, A_t=a] $$
+$$ = \max_{a} \mathbb{E}_{\pi_*} [R_{t+1} + \gamma G_{t+1} | S_t=s, A_t=a] $$
+$$ = \max_{a} \mathbb{E} [R_{t+1} + \gamma v_*(S_{t+1}) | S_t $$
+$$ = s, A_t = a] = \max_{a} \sum_{s',r} p(s',r|s,a) [r + \gamma v_8(s')].$$
+
+
+
+$q_*(s,a) = \mathbb{E}\left[R_{t+1} + \gamma \max_{a'} q_*(S_{t+1},a')| S_t=s, A_t=a \right] \\
+= \sum_{s',r} p(s',r|s,a) \left[r + \gamma \max_{a'} q_*(s',a')\right] \\
+$
+\قسمت{برنامه ریزی پویا}
+
+اصطلاح \textit{برنامه نویسی پویا}  \پاورقی{Dynamic Programing} به مجموعه ای از الگوریتم ها گفته می شود که می تواند برای محاسبه خط مشی بهینه استفاده شود، در صورتی که یک مدل کامل از محیط موجود باشد.
+الگوریتم های کلاسیک برنامه ریزی پویا به دلیل فرض
+مدل کاملی از محیط و همچنین هزینه محاسباتی زیادشان، به لحاظ عملی چندان قابل استفاده نیستند اما به لحاظ نظری مهم هستند.
+
+
+ایده اصلی DP و به طور کلی یادگیری تقویتی ، استفاده از تابع ارزش حالت یا عمل برای سازماندهی یک الگوریتم جستجو برای خط مشی بهینه است.
+هدف، تخمین تابع ارزش بهینه،
+$v_*$
+یا
+$q_*$
+است
+که در معادلات بهینگی بلمن صدق می کند:
+
+
+$$v_*(s)= \max_{a} \sum_{s',r} p(s',r | s,a)[r + \gamma v_*(s')]$$ \label{bellman_opt_state}
+
+$$q_*(s,a) = \sum_{s',r} p(s',r | s,a)[r + \gamma \max_{a'} q_* (s',a')]$$
+\label{bellman_opt_action}
+
+%\قسمت{ارزیابی خط مشی}
+اگر دینامیک محیط کاملاً مشخص باشد معادلات 
+\ref{bellman_opt_state}
+و
+\ref{bellman_opt_action}
+به ترتیب یک دستگاه معادلات خطی با $|\mathbb{S}|$
+  است همزمان خطی
+معادلات در | S | ناشناخته ها (vπ (s)، s ∈ S). در اصل ، راه حل آن ساده ، اگر خسته کننده باشد ،
+محاسبه برای اهداف ما ، روشهای حل تکراری مناسب ترین هستند. یک دنباله را در نظر بگیرید
+توابع مقدار تقریبی v0 ، v1 ، v2 ،. . . ، هر نقشه برداری S
++ به R (اعداد واقعی). اولیه
+تقریب ، v0 ، خودسرانه انتخاب می شود (با این تفاوت که در صورت وجود ، به حالت ترمینال باید مقدار 0 داده شود) ،
+و هر تقریب پی در پی با استفاده از معادله بلمن برای vπ (4.4) به عنوان یک به روزرسانی بدست می آید
+قانون:
+If the environment’s dynamics are completely known, then (4.4) is a system of |S| simultaneous linear
+equations in |S| unknowns (the vπ(s), s ∈ S). In principle, its solution is a straightforward, if tedious,
+computation. For our purposes, iterative solution methods are most suitable. Consider a sequence
+of approximate value functions v0, v1, v2, . . ., each mapping S
++ to R (the real numbers). The initial
+approximation, v0, is chosen arbitrarily (except that the terminal state, if any, must be given value 0),
+and each successive approximation is obtained by using the Bellman equation for vπ (4.4) as an update
+rule:
+
+$$v_{k+1}(s) \triangleq \mathbb{E}_{\pi} [R_{t+1} + \gamma v_k(S_{t+1}) | S_t=s] = \sum_{a} \pi(a|s) \sum_{s',r} p(s',r | s,a)[r + \gamma v_k(s')]$$
+
+
+for all s ∈ S. Clearly, vk = vπ is a fixed point for this update rule because the Bellman equation for vπ
+assures us of equality in this case. Indeed, the sequence {vk} can be shown in general to converge to
+vπ as k → ∞ under the same conditions that guarantee the existence of vπ. This algorithm is called
+iterative policy evaluation.
+
+
+\قسمت{بهبود خط مشی}
+
+Our reason for computing the value function for a policy is to help find better policies. Suppose we
+have determined the value function vπ for an arbitrary deterministic policy π. For some state s we
+would like to know whether or not we should change the policy to deterministically choose an action
+a 6= π(s). We know how good it is to follow the current policy from s—that is vπ(s)—but would it be
+
+better or worse to change to the new policy? One way to answer this question is to consider selecting
+a in s and thereafter following the existing policy, π. The value of this way of behaving is
+
+
+\شروع{قضیه}[قضیه‌ی بهبود خط مشی]
+فرض کنید $\pi$ و 
+$\pi_0$
+دو خط مشی معین باشند که برای هر 
+$s \in S$
+
+$$q_\pi(s, \pi'(s)) \ge \pi'(s)$$
+در این صورت 
+$v_{\pi'}(s) \ge v_\pi(s)$
+\پایان{قضیه}
+
+درستی قضیه بالا را می\nf توان با استفاده از تعاریف به روشنی بررسی کرد
+
+$v_\pi (s) \le q_\pi (s,\pi'(s)) = \mathbb{E}\left[R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t=s, A_t = \pi'(a)\right] \\
+= \mathbb{E}_{\pi'}\left[R_{t+1}+\gamma v_\pi(s_{t+1}) | S_t=s\right] \\
+ \le \mathbb{E}_{\pi'}[R_{t+1}+ \gamma q_\pi(S_{t+1}, \pi'(S_{t+1})) | S_t=s] \\
+= \mathbb{E}_{\pi'}[R_{t+1} + \gamma \mathbb{E}_{\pi'}[R_{t+2} + \gamma v_\pi(S_{t+2})] | S_t=s] \\
+\le \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 v_\pi(s_{t+3}) | S_t=s] \\
+\vdots \\
+\le \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 R_{t+4} + \dots | S_t=s] \\
+= v_{\pi'}(s)$
+\قسمت{الگوریتم Policy Iteration}
+
+Once a policy, π, has been improved using vπ to yield a better policy, π
+0
+, we can then compute vπ0 and
+improve it again to yield an even better π
+00. We can thus obtain a sequence of monotonically improving
+policies and value functions:
+
+$$\pi_0 \longrightarrow v_{\pi_0} \longrightarrow \pi_1 \longrightarrow v_{\pi{1}} \longrightarrow \pi_2 \longrightarrow \dots \longrightarrow \pi_* \longrightarrow v_*$$
+
+\قسمت{الگوریتم Value Iteration}
+
+One drawback to policy iteration is that each of its iterations involves policy evaluation, which may
+itself be a protracted iterative computation requiring multiple sweeps through the state set. If policy
+evaluation is done iteratively, then convergence exactly to vπ occurs only in the limit. Must we wait
+for exact convergence, or can we stop short of that? The example in Figure 4.1 certainly suggests that
+it may be possible to truncate policy evaluation. In that example, policy evaluation iterations beyond
+the first three have no effect on the corresponding greedy policy.
+In fact, the policy evaluation step of policy iteration can be truncated in several ways without losing
+the convergence guarantees of policy iteration. One important special case is when policy evaluation
+is stopped after just one sweep (one update of each state). This algorithm is called value iteration. It
+can be written as a particularly simple update operation that combines the policy improvement and
+truncated policy evaluation steps:
+
+
+
+for all s ∈ S. For arbitrary v0, the sequence {vk} can be shown to converge to v∗ under the same
+conditions that guarantee the existence of v∗.
+
+\قسمت{درهم تنیدگی PE و PI و الگوریتم های GPI}
+
+
+A major drawback to the DP methods that we have discussed so far is that they involve operations
+over the entire state set of the MDP, that is, they require sweeps of the state set. If the state set is very
+large, then even a single sweep can be prohibitively expensive
+
+
+Asynchronous DP algorithms are in-place iterative DP algorithms that are not organized in terms
+of systematic sweeps of the state set. These algorithms update the values of states in any order
+whatsoever, using whatever values of other states happen to be available. The values of some states
+may be updated several times before the values of others are updated once. To converge correctly,
+however, an asynchronous algorithm must continue to update the values of all the states: it can’t ignore
+any state after some point in the computation. Asynchronous DP algorithms allow great flexibility in
+selecting states to update.
+
+\قسمت{Q-learning}
+ایده اصلی در روش Q-learning، تخمین تابع مقدار عمل  
+$Q^*(s,a)$ 
+با استفاده از معادله بلمن به عنوان یک به روزرسانی تکراری ،
+$$Q_{i+1}(s,a) = \mathbb{E}[r+ \gamma \max_{a'} Q_i(s',a')|s,a]$$
+چنین الگوریتم های تکرار مقداری به تابع عمل-ارزش بهینه همگرا می شوند، 
+$Q_i \longrightarrow Q^*$
+وقتی
+$i \longrightarrow \infty$
+
+در عمل ، این رویکرد کلی کاملا غیر عملی است ،
+زیرا تابع عمل-ارزش برای هر دنباله، به طور جداگانه و بدون هیچ گونه تعمیم برآورد می شود. در عوض، معمولاً از یک تخمین گر توابع (مثل شبکه عصبی) برای تخمین تابع عمل-ارزش استفاده می شود، در فصل سوم با این روش بیشتر آشنا خواهیم شد.

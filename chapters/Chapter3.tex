@@ -113,6 +113,60 @@ $1...M$}
 \subsubsection{روش C51 }
 %\قسمت{روش C51}
 \subsubsection{روش DDPG}
+
+%An obvious approach to adapting deep reinforcement learning methods such as DQN to continuous domains is to to simply discretize the action space. However, this has many limitations, most notably the curse of dimensionality: the number of actions increases exponentially with the number of degrees of freedom.
+گسسته سازی فضای عمل یک روش برای سازگار‌کردن و انطباق روش‌های یادگیری تقویتی عمیق نظیر 
+\lr{DQN}
+با دامنه‌های پیوسته می‌یاشد. با این حال، این روش محدودیت‌های زیادی دارد، مخصوصا مشکل نفرین ابعاد.  نفرین ابعاد بیان‌گر این است که تعداد عمل‌ها به صورت نمایی با تعداد درجات آزادی افزایش پیدا می‌کند. 
+
+%we present a model-free, off-policy actor-critic algorithm using deep function approximators that can learn policies in high-dimensional, continuous action spaces.
+در روشی جدید یک الگوریتم بازیگر-منتقد مستقل از خط‌مشی، مستقل از مدل
+\LTRfootnote{A model-free, off-policy actor-critic algorithm}
+ با استفاده از تخمین‌گر تابع عمیق ارائه می‌دهند که می‌تواند خط‌مشی‌ها را در فضاهای عمل پیوسته با ابعاد بالا یاد بگیرد.
+
+%our work is based on the deterministic policy gradient (DPG) algorithm which we call Deep DPG (DDPG)
+این روش بر اساس الگوریتم گرادیان خط‌مشی معین
+\LTRfootnote{Deterministic policy gradient (DPG)}
+است که آن را
+گرادیان خط‌مشی معین عمیق
+\LTRfootnote{Deep DPG (DDPG)}
+می نامیم. 
+%Here we combine the actor-critic approach with insights from Deep Q Network (DQN)
+ در ان روش، رویکرد بازیگر-منتقد را با بینش شبکه \lr{Q} عمیق
+\LTRfootnote{Deep Q Network (DQN)} 
+   ترکیب می‌کنیم.
+   
+   
+%the DPG algorithm maintains a parametrized actor function which specifies the current policy by deterministically mapping states to a specific action.
+الگوریتم 
+\lr{DPG}
+ تابع عمل پارامتری
+$
+	\mu (s|\theta^\mu)	
+$
+  را نگهداری می‌کند که با نگاشت معین حالت‌ها به یک عمل خاص، سیاست فعلی را مشخص می‌کند.
+
+%the critic is learned using the Bellman equation as in Q-learning.
+همانند روش یادگیری 
+\lr{Q}
+در اینجا نیز منتقد
+$Q(s,a)$
+ با استفاده از معادله بلمن آموخته می‌شود.
+%the actor is updated by following applying the chain rule to the expected return from the start distribution with respect to the actor parameters 
+ بازیگر با پیروی از اعمال قاعده زنجیره‌ای روی عایدی چشم‌داشتی از توزیع شروع
+ $J$
+  نسبت به پارامترهای بازیگر به روز می‌شود.
+\begin{align}
+	\nabla_{\theta \mu} J = & \mathbb{E}_{s_t \sim \rho ^{ \beta}} [ \nabla_{\theta \mu} Q(s,a|\theta^Q)|_{s=s_t,a=\mu (s_t|\theta^{\mu})}  ] \\ \nonumber
+	= & \mathbb{E}_{s_t \sim \rho ^{ \beta}} [ \nabla_{\theta \mu} Q(s,a|\theta^Q)|_{s=s_t, a=\mu (s_t)} \nabla_{\theta_{\mu}} \mu (s|\theta^{\mu})|_{s=s_t} ]
+\end{align}
+
+در این روش نیز، مانند روش 
+\lr{DQN}
+از انبار تجربه استفاده می شود. 
+  در هر مرحله، بازیگر و منتقد با نمونه‌برداری یکنواخت از انبار به روز رسانی می‌شوند. از آنجا که 
+  \lr{DDPG}
+  الگوریتمی مستقل از خط‌مشی می‌باشد، انبار تجربه می تواند بزرگ باشد، که به الگوریتم اجازه می‌دهد تا از یادگیری مجموعه‌ای از انتقال‌های ناهمبسته بهره‌مند شود.
 %\قسمت{روش DDPG}
 %Here we combine the actor-critic approach with insights from the recent success of Deep Q Network
 %(DQN) (Mnih et al., 2013; 2015). Prior to DQN, it was generally believed that learning value

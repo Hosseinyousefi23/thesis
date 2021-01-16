@@ -1,0 +1,39 @@
+\BOOKMARK [0][-]{chapter.1}{مقدمه}{}% 1
+\BOOKMARK [1][-]{section.1.1}{تعریف مسئله}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{اهمیت موضوع}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{فضای حالت‌ها و عمل‌ها}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{خط مشی}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{سیگنال پاداش}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.6}{تابع ارزش}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.7}{محیط}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.8}{مسئله اکتشاف و بهره برداری}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.9}{اهداف تحقیق}{chapter.1}% 10
+\BOOKMARK [1][-]{section.1.10}{ساختار پایان‌نامه}{chapter.1}% 11
+\BOOKMARK [0][-]{chapter.2}{مفاهیم اولیه یادگیری تقویتی}{}% 12
+\BOOKMARK [1][-]{section.2.1}{دینامیک عامل-محیط}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.2}{فرایند تصمیم‌گیری مارکوف}{chapter.2}% 14
+\BOOKMARK [1][-]{section.2.3}{عناصر اصلی یادگیری تقویتی}{chapter.2}% 15
+\BOOKMARK [2][-]{subsection.2.3.1}{خط‌مشی}{section.2.3}% 16
+\BOOKMARK [2][-]{subsection.2.3.2}{سیگنال پاداش}{section.2.3}% 17
+\BOOKMARK [2][-]{subsection.2.3.3}{عایدی و تابع ارزش}{section.2.3}% 18
+\BOOKMARK [2][-]{subsection.2.3.4}{مدل محیط}{section.2.3}% 19
+\BOOKMARK [1][-]{section.2.4}{برنامه‌ریزی پویا}{chapter.2}% 20
+\BOOKMARK [2][-]{subsection.2.4.1}{خط‌مشی و تابع ارزش بهینه}{section.2.4}% 21
+\BOOKMARK [2][-]{subsection.2.4.2}{معادله بلمن}{section.2.4}% 22
+\BOOKMARK [2][-]{subsection.2.4.3}{بهینگی و معادله بهینگی بلمن}{section.2.4}% 23
+\BOOKMARK [2][-]{subsection.2.4.4}{برنامه‌ریزی پویا}{section.2.4}% 24
+\BOOKMARK [2][-]{subsection.2.4.5}{بهبود خط‌مشی}{section.2.4}% 25
+\BOOKMARK [2][-]{subsection.2.4.6}{الگوریتم تکرار خط‌مشی}{section.2.4}% 26
+\BOOKMARK [2][-]{subsection.2.4.7}{الگوریتم تکرار ارزش}{section.2.4}% 27
+\BOOKMARK [2][-]{subsection.2.4.8}{درهم تنیدگی PE و PI و الگوریتم‌های GPI}{section.2.4}% 28
+\BOOKMARK [1][-]{section.2.5}{روش های یادگیری تفاوت زمانی}{chapter.2}% 29
+\BOOKMARK [2][-]{subsection.2.5.1}{Q-learning}{section.2.5}% 30
+\BOOKMARK [0][-]{chapter.3}{نتایج اخیر}{}% 31
+\BOOKMARK [1][-]{section.3.1}{روش‌های مبتنی بر مدل و بدون مدل}{chapter.3}% 32
+\BOOKMARK [1][-]{section.3.2}{روش‌های بدون مدل}{chapter.3}% 33
+\BOOKMARK [2][-]{subsection.3.2.1}{روش‌های مبتنی بر ارزش}{section.3.2}% 34
+\BOOKMARK [2][-]{subsection.3.2.2}{روش‌های مبتنی بر خط‌مشی}{section.3.2}% 35
+\BOOKMARK [2][-]{subsection.3.2.3}{مقایسه روش بهینه‌سازی خط‌مشی و Q-learning}{section.3.2}% 36
+\BOOKMARK [1][-]{section.3.3}{روش‌های مبتنی بر مدل}{chapter.3}% 37
+\BOOKMARK [2][-]{subsection.3.3.1}{روش مدل جهان}{section.3.3}% 38
+\BOOKMARK [0][-]{appendix.Alph1}{مطالب تکمیلی}{}% 39

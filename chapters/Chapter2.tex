@@ -295,6 +295,7 @@ q_*(s,a) =& \mathbb{E}\left[R_{t+1} + \gamma \max_{a'} q_*(S_{t+1},a')| S_t=s, A
 \label{eq:2}.
 \end{align}
 
+
 \subsection{برنامه‌ریزی پویا}
 
 
@@ -361,8 +362,26 @@ $v_{\pi}$
 همگرا می‌شود.  این الگوریتم را 
 \textit{ارزیابی خط‌مشی گام به گام}
 \LTRfootnote{Iterative policy evaluation} یا به طور خلاصه 
-ارزیابی خط‌مشی \LTRfootnote{Policy Evaluation} می‌نامند.
- 
+ارزیابی خط‌مشی
+\LTRfootnote{Policy Evaluation}
+ می‌نامند.
+
+
+
+
+\شروع{الگوریتم}
+{الگوریتم ارزیابی خط مشی}
+\ورودی{خط مشی $\pi$}
+\به‌ازای{تا رسیدن به همگرایی تکرار کن}
+\به‌ازای{برای هر $s \in \EuScript{S}$}
+\دستور{
+	$V(s) \longleftarrow \sum_{a} \pi(a|s) \sum_{s',r} p(s',r|s,a) \left[r + \gamma V(s')\right]$
+}
+\پایان‌به‌ازای
+\پایان‌به‌ازای
+\خروجی{$V \approx v_\pi$}
+\پایان{الگوریتم}
+
 % 
 %for all s ∈ S. Clearly, vk = vπ is a fixed point for this update rule because the Bellman equation for vπ
 %assures us of equality in this case. Indeed, the sequence {vk} can be shown in general to converge to
@@ -432,6 +451,22 @@ v_{\pi'}(s) \ge v_\pi(s)
 \le & \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 R_{t+4} + \dots | S_t=s] \\
 \le & v_{\pi'}(s)
 \end{align*}
+
+
+\شروع{الگوریتم}
+{الگوریتم بهبود خط مشی}
+\ورودی{خط مشی $\pi$ و تابع  
+	$V \approx v_\pi$
+}
+\به‌ازای{برای هر $s \in \EuScript{S}$}
+\دستور{
+	$\pi(s) \longleftarrow arg \max_{a} \sum_{s',r} p(s',r|s,a) \left[r + \gamma V(s')\right]$
+}
+\پایان‌به‌ازای
+\خروجی{$V \approx v_\pi$}
+\پایان{الگوریتم}
+
+
 \subsection{الگوریتم تکرار خط‌مشی}
 قضیه \ref{policyimptheorem} یک شرط کافی برای اینکه خط‌مشی $\pi'$ بهتر یا مساوی خط‌مشی $\pi$ باشد را بیان می‌کند. این قضیه می‌تواند ما را به روشی برای بهبود یک خط‌مشی، سوق دهد. منظور ما از بهبود خط‌مشی، روشی برای دستیابی به یک خط‌مشی بهتر، از روی یک خط‌مشی ضعیف تر است.
 
@@ -529,9 +564,17 @@ $$V(S_t) \longleftarrow V(S_t) + \alpha\left[R_{t+1} + \gamma V(S_{t+1}) - V(S_t
 
 \شروع{الگوریتم}{الگوریتم TD(0) برای تخمین $v_\pi$}
 \ورودی{خط مشی $\pi$}
-\دستور{تابع $V(s)$ را با مقادیر دلخواه مقداردهی اولیه کن}
-\‌به‌ازای{برای هر گام اپیزود}
-\دستور
+\دستور{تابع $V(s)$ را با مقادیر دلخواه مقداردهی اولیه کن.}
+\‌به‌ازای{برای هر گام در اپیزود}
+\دستور{عمل $a$ را با دنبال کردن خط مشی $\pi$ انتخاب کن}
+\دستور{پاداش $r$ و حالت جدید $s'$ را مشاهده کن}
+\دستور{
+$V(s) \longleftarrow V(s) + \alpha\left[r + \gamma V(s') - V(s)\right]$
+}
+\دستور{
+	$s \longleftarrow s'$
+}
+
 \پایان‌به‌ازای
 
 \پایان{الگوریتم}

@@ -55,6 +55,9 @@ $$L_i(\theta_i)=\mathbb{E}\left[(y_i - Q(s,a;\theta_i))^2\right]$$  و  $$y_i = 
 به جای محاسبه امیدریاضی کامل در گرادیان فوق، غالباً از نظر محاسباتی، بهینه‌سازی تابع هزینه با نزول گرادیان تصادفی  \LTRfootnote{stochastic gradient descend} راه‌حل بهتری است. اگر در هر مقطع زمانی، وزن‌ها بروزرسانی شود و امیدریاضی با یک نمونه از توزیع خط‌مشی رفتار \LTRfootnote{behavior policy} جایگزین شود، الگوریتم
 \ref{alg:qlearn}
  Q-learning را نشان می‌دهد.
+ 
+یک چالش جدی که در استفاده از شبکه عصبی برای یادگیری تقویتی وجود دارد این است که اغلب الگوریتم های بهینه سازی، فرض می کنند که نمونه ها به طور یکنواخت و مستقل از یکدیگر، از فضای داده ها انتخاب می شوند. درحالیکه در یادگیری تقویتی، این فرض معمولا برقرار نیست؛ به خصوص اگر نمونه ها از طریق کاوش در محیط واقعی به دست آمده باشد. یکی از روش های برای حل این مشکل، استفاده از انبار تجربه است. در هر گام، تجربه به دست آمده را در حافظه ای به نام انبار تجربه ذخیره می کنیم. هر تجربه به شکل چهارتایی $(s,a,r,s')$ ذخیره می شود. از انبار تجربه می توان برای نمونه گیری و دسته \LTRfootnote{batch} سازی استفاده کرد. اگر انبار تجربه پر شود، کهنه ترین تجربیات، حذف می شوند تا تجربیات تازه جایگزین آنها شود
+ 
 \شروع{الگوریتم}
 {الگوریتم Q-learning با Experience replay}
 
@@ -112,6 +115,44 @@ $1...M$}
 !!!!!!!!!!!!!!
 \subsubsection{روش C51 }
 %\قسمت{روش C51}
+\شروع{الگوریتم}
+{الگوریتم دسته ای}
+\ورودی{یک انتقال 
+	$x_t, a_t, r_t, x_{t+1}, \gamma_t \in [0,1]$
+}
+\دستور{
+	$Q(x_{t+1}, a) \triangleq \sum_{i} z_i p_i (x_{t+1}, a)$
+}
+\دستور{
+$a^* \longleftarrow arg \max_{a} Q(x_{t+1}, a)$
+}
+\دستور{
+	$m_i = 0, \quad i \in 0,\dots,N-1$
+}
+\به‌ازای{برای 
+	$j = 0,\dots,N-1$
+}
+\دستور{
+	$\hat{\mathcal{T}}_{z_j} \longleftarrow \left[r_t + \gamma_t z_j \right]^{V_{MAX}}_{V_{MIN}}$
+}
+\دستور{
+$b_j \longleftarrow \dfrac{(\hat{\mathcal{T}}_{z_j} - V_{MIN})}{\Delta z}$
+}
+\دستور{
+	$l \longleftarrow \floor{b_j}, u \longleftarrow \ceil{b_j}$
+}
+
+\دستور{
+	$m_l \longleftarrow m_l + p_j(x_{t+1}, a^*)(u-b_j)$
+}
+\دستور{
+	$m_u \longleftarrow m_u + p_j(x_{t+1},a^*)(b_j - l)$
+}
+\پایان‌به‌ازای
+\خروجی{
+	$\sum_{i} m_i log p_i (x_t, a_t)$
+}
+\پایان{الگوریتم}
 \subsubsection{روش DDPG}
 %\قسمت{روش DDPG}
 %Here we combine the actor-critic approach with insights from the recent success of Deep Q Network

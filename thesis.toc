@@ -38,10 +38,10 @@
 \contentsline {subsubsection}{روش DDPG}{30}{section*.5}%
 \contentsline {subsection}{\numberline {3-2-2}روش‌های مبتنی بر خط‌مشی}{31}{subsection.3.2.2}%
 \contentsline {subsubsection}{روش‌های بازیگر-منتقد}{33}{section*.6}%
-\contentsline {subsubsection}{روش TRPO}{34}{section*.7}%
+\contentsline {subsubsection}{روش TRPO}{35}{section*.7}%
 \contentsline {subsubsection}{روش PPO}{37}{section*.8}%
-\contentsline {subsection}{\numberline {3-2-3}مقایسه روش بهینه‌سازی خط‌مشی و Q-learning}{37}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3-2-3}مقایسه روش بهینه‌سازی خط‌مشی و Q-learning}{38}{subsection.3.2.3}%
 \contentsline {paragraph}{تعامل بین بهینه‌سازی خط‌مشی و Q-learning}{38}{section*.9}%
-\contentsline {section}{\numberline {3-3}روش‌های مبتنی بر مدل}{38}{section.3.3}%
-\contentsline {subsection}{\numberline {3-3-1}روش مدل جهان}{38}{subsection.3.3.1}%
-\contentsline {chapter}{\numberline {آ}مطالب تکمیلی}{39}{appendix.Alph1}%
+\contentsline {section}{\numberline {3-3}روش‌های مبتنی بر مدل}{39}{section.3.3}%
+\contentsline {subsection}{\numberline {3-3-1}روش مدل جهان}{39}{subsection.3.3.1}%
+\contentsline {chapter}{\numberline {آ}مطالب تکمیلی}{40}{appendix.Alph1}%

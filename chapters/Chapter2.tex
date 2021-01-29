@@ -345,9 +345,28 @@ $wait$
 و
 $recharge$
 را به ترتیب با $s$ و $w$ و $re$ نشان می\nf دهیم. از آنجایی که تنها دو حالت وجود دارد، معادله بهینگی بلمن شامل دو معادله است:
+\begin{align}
+v_*(h) =& \max \left\{ 
+\begin{array}{lr}
+   p(h|h,s) \left[ r(h,s,h)+ \gamma v_*(h) \right] + p(l|h,s) \left[ r(h,s,l)+\gamma v_*(l) \right], \\ 
+   p(h|h,w)[r(h,w,h)+ \gamma v_*(h)]+p(l|h,w)[r(h,w,l)+\gamma v_*(l)]
+\end{array}
+\right\} \nonumber \\
+ =& \max \left\{ 
+\begin{array}{lr}
+   \alpha \left[ r_s+ \gamma v_*(h) \right] + (1 - \alpha) \left[ r_s+\gamma v_*(l) \right], \\ 
+   1 \left[ r_w + \gamma v_*(h)]+ 0[r_w + \gamma v_*(l)]
+\end{array}
+\right\} \\
+ =& \max \left\{ 
+\begin{array}{lr}
+   r_s + \gamma \left[  \alpha \gamma v_*(h) + (1 - \alpha) \gamma v_*(l) \right], \\ 
+   r_w + \gamma v_* (h)
+\end{array}
+\right\}.
+\label{eq:recycle_h}
+\end{align}
 
-
-!!!!!!!!!!!!!!!!!!!!!!! معادله اول
 
 
 به طریق مشابه برای 
@@ -355,7 +374,19 @@ $v_*(l)$
 معادله زیر به\nf دست می\nf آید:
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! معادله دوم
+
+
+\begin{align}
+v_*(l) = \max \left \{ 
+\begin{array}{lr}
+\beta r_s - 3(1-\beta) + \gamma \left[ (1-\beta) v_*(h)+\beta v_*(l)\right] \\
+r_w + \gamma v_*(l), \\
+\gamma v_*(h)
+\end{array}
+\right \}
+\label{eq:recycle_l}
+\end{align}
+
 \subsection{برنامه‌ریزی پویا}
 
 ایده اصلی DP و بیشتر الگوریتم یادگیری تقویتی‌، استفاده از تابع ارزش حالت یا عمل برای سازماندهی یک الگوریتم جستجو برای پیدا کردن خط‌مشی بهینه
@@ -513,14 +544,15 @@ v_{\pi'}(s) \ge v_\pi(s)
 \پایان{قضیه}
 درستی قضیه بالا را می\nf توان با استفاده از تعاریف به روشنی بررسی کرد؛
 \begin{align*}
-& v_\pi (s) \le q_\pi (s,\pi'(s)) = & \mathbb{E}\left[R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t=s, A_t = \pi'(a)\right] \\
-= & \mathbb{E}_{\pi'}\left[R_{t+1}+\gamma v_\pi(s_{t+1}) | S_t=s\right] \\
- \le &  \mathbb{E}_{\pi'}[R_{t+1}+ \gamma q_\pi(S_{t+1}, \pi'(S_{t+1})) | S_t=s] \\
-= & \mathbb{E}_{\pi'}[R_{t+1} + \gamma \mathbb{E}_{\pi'}[R_{t+2} + \gamma v_\pi(S_{t+2})] | S_t=s] \\
-\le & \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 v_\pi(s_{t+3}) | S_t=s] \\
+v_\pi (s) \le & \ q_\pi (s,\pi'(s))  \\
+ =& \  \mathbb{E}\left[R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t=s, A_t = \pi'(a)\right] \\
+= & \  \mathbb{E}_{\pi'}\left[R_{t+1}+\gamma v_\pi(s_{t+1}) | S_t=s\right] \\
+ \le & \  \mathbb{E}_{\pi'}[R_{t+1}+ \gamma q_\pi(S_{t+1}, \pi'(S_{t+1})) | S_t=s] \\
+= & \ \mathbb{E}_{\pi'}[R_{t+1} + \gamma \mathbb{E}_{\pi'}[R_{t+2} + \gamma v_\pi(S_{t+2})] | S_t=s] \\
+\le & \ \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 v_\pi(s_{t+3}) | S_t=s] \\
 \vdots \\
-\le & \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 R_{t+4} + \dots | S_t=s] \\
-\le & v_{\pi'}(s)
+\le & \  \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 R_{t+4} + \dots | S_t=s] \\
+\le & \  v_{\pi'}(s)
 \end{align*}
 
 

@@ -167,7 +167,8 @@ $\pi(s) = a$.
 می‌گوییم خط‌مشی $\pi$ در یک
  MDP
   \textit{
-  	دنبال می\nfشود
+\مهم{دنبال 
+  	می\nf شود}
   }
    هرگاه
 $$A_t \sim \pi(. |S_t),	 \quad t \in \IN.$$
@@ -259,7 +260,6 @@ $$v_\pi(s) \ge v_{\pi'}(s)$$
 \پایان{تعریف} می\nf توان نشان داد که برای هر MDP متناهی، حداقل یک خط\nf مشی وجود دارد که بهتر یا مساوی هر خط\nf مشی دیگری باشد
 \cite{suttonbook}.
  به چنین خط\nf مشی\nf ای 
- 
 \textit{\مهم{خط\nf مشی بهینه}}
 \LTRfootnote{Optimal Policy}
  گفته می\nf  شود. ممکن است بیش از یک خط\nf مشی بهینه وجود داشته باشد. تمام خط\nf مشی\nf های بهینه را با نماد $\pi_*$  نمایش می\nf دهیم. تابع ارزش متناظر با همه خط\nf مشی\nf
@@ -301,12 +301,11 @@ $s \in \EuScript{S}$
  و 
  $a \in \EuScript{A}$.
  داریم
- 
 \begin{align}
 q_\pi (s,a) \triangleq& \mathbb{E}_\pi [G_t | S_t = s, A_t = a] \nonumber \\
 =& \mathbb{E}_\pi [R_{t+1}+ \gamma G_{t+1}|S_t=s, A_t = a] \nonumber \\
 =&\sum_{s',r} p(s',r|s,a) \sum_{a'} \pi(a'|s')[r+\gamma \mathbb{E}_\pi[G_{t+1}|S_{t+1}=s', A_{t+1} = a']] \nonumber\\
-=&\sum_{s',r}  p(s',r|s,a) \sum_{a'} \pi(a'|s')[r+\gamma q_\pi(s',a')] \quad \forall s \in \mathbb(S) \numerhis 
+=&\sum_{s',r}  p(s',r|s,a) \sum_{a'} \pi(a'|s')[r+\gamma q_\pi(s',a')] \quad \forall s \in \EuScript{S}. \numerhis 
 \label{bellmanaction}
 \end{align}
 رابطه \ref{bellmanaction} به معادله بلمن مربوط به تابع ارزش عمل معروف است.
@@ -389,7 +388,7 @@ $v_*(l)$
 		r_w + \gamma v_*(l), \\
 		\gamma v_*(h)
 	\end{array}
-	\right \}
+	\right \}.
 	\label{eq:recycle_l}
 \end{align}
 برای هر از انتخاب از 
@@ -423,11 +422,11 @@ $q_*$
 است
 که در معادلات بهینگی بلمن صدق می‌کند:
 \begin{equation}
-v_{*}(s) = \max_{a} \sum_{s',r} p(s',r | s,a)[r + \gamma v_*(s')]
+v_{*}(s) = \max_{a} \sum_{s',r} p(s',r | s,a)[r + \gamma v_*(s')],
 \label{bellman_opt_state}
 \end{equation}
 \begin{equation}
-q_{*}(s,a) = \sum_{s',r} p(s',r | s,a)[r + \gamma \max_{a'} q_* (s',a')]
+q_{*}(s,a) = \sum_{s',r} p(s',r | s,a)[r + \gamma \max_{a'} q_* (s',a')].
 \label{bellman_opt_action}
 \end{equation}
 %\section{ارزیابی خط‌مشی}
@@ -440,7 +439,7 @@ q_{*}(s,a) = \sum_{s',r} p(s',r | s,a)[r + \gamma \max_{a'} q_* (s',a')]
  و
  $|\EuScript{S} \times \EuScript{A}|$
   هستند.
-در ساده ترین حالت، باحل این دستگاه معادلات  خطی می توان  مقادیر 
+در ساده ترین حالت، باحل این دستگاه معادلات  خطی می\nf توان  مقادیر 
 $v_*(s)$
 و
 $q_*(s,a)$
@@ -453,7 +452,7 @@ $\IR$
  هستند.
 تقریب اولیه $v_0$
 در همه حالت\nf ها
-به طور دلخواه انتخاب می‌شود(به جز در حالت‌های پایانی که باید صفر باشد). هر تقریب به عنوان یک قانون بروزرسانی به وسیله معادله بلمن از روی تقریب قبلی بدست می‌آید. برای هر 
+به طور دلخواه انتخاب می‌شود (به جز در حالت‌های پایانی که باید صفر باشد). هر تقریب به عنوان یک قانون بروزرسانی به وسیله معادله بلمن از روی تقریب قبلی بدست می‌آید. برای هر 
 $s \in \EuScript{S}$:
 %If the environment’s dynamics are completely known, then (4.4) is a system of |S| simultaneous linear
 %equations in |S| unknowns (the vπ(s), s ∈ S). In principle, its solution is a straightforward, if tedious,
@@ -471,7 +470,7 @@ v_{k+1}(s) \triangleq & \mathbb{E}_{\pi} [R_{t+1} + \gamma v_k(S_{t+1}) | S_t=s]
 $v_{\pi}$
 نوشت و واضح است که 
  $v_k = v_{\pi}$
- نقطه ثابتی برای این قانون بروز رسانی است.
+ نقطه ثابتی برای این قانون به\nf روز\nf رسانی است.
  در واقع، می‌توان نشان داد که در حالت کلی دنباله 
  $\{ v_k \}$
 وقتی که 
@@ -534,14 +533,13 @@ $s$
 $\pi$
  است. 
  ارزش این شیوه عملکرد برابر است با:
- 
  \begin{align}
 q_\pi(s,a) = \sum_{s',r} p(s',r|s,a)\left[r + \gamma v_\pi(s')\right]	
  	\label{eq:policybetter}
  \end{align}
  اگر عبارت 
  \ref{eq:policybetter}
- از $v_\pi(s)$ بزرگتر باشد، بدین معناست که انتخاب قطعی عمل $a$ در حالت $s$ و سپس دنبال کردن خط‌مشی $\pi$ بهتر از این است که همواره خط‌مشی $\pi$ را دنبال کنیم. این گزاره را می‌توان به فرم کلی تر در قالب یک قضیه بیان کرد.
+ از $v_\pi(s)$ بزرگتر باشد، بدین معناست که انتخاب قطعی عمل $a$ در حالت $s$ و سپس دنبال کردن خط‌مشی $\pi$ بهتر از این است که همواره خط‌مشی $\pi$ را دنبال کنیم. این گزاره را می‌توان به فرم کلی\nf تر در قالب یک قضیه بیان کرد.
 
 %Our reason for computing the value function for a policy is to help find better policies. Suppose we
 %have determined the value function vπ for an arbitrary deterministic policy π. For some state s we
@@ -553,12 +551,12 @@ $\pi_0$
 دو خط‌مشی قطعی باشند که برای هر 
 $s \in \EuScript{S}$
 \begin{align}
-q_\pi(s, \pi'(s)) \ge \v_{\pi}(s) \numberthis
+q_\pi(s, \pi'(s)) \ge \v_{\pi}(s), \numberthis
 \label{action-state}
 \end{align}
 در این صورت 
 \begin{align}
-v_{\pi'}(s) \ge v_\pi(s)
+v_{\pi'}(s) \ge v_\pi(s).
 \label{state-state}
 \end{align}
 همچنین اگر نامساوی
@@ -581,10 +579,9 @@ v_\pi (s) \le & \ q_\pi (s,\pi'(s))  \\
 \le & \  v_{\pi'}(s).
 \end{align*}
 قضیه \ref{policyimptheorem} یک شرط کافی برای اینکه خط‌مشی $\pi'$ بهتر یا مساوی خط‌مشی $\pi$ باشد را بیان می‌کند. این قضیه می‌تواند ما را به روشی برای بهبود یک خط‌مشی، سوق دهد. منظور ما از بهبود خط‌مشی، روشی برای دستیابی به یک خط‌مشی بهتر، از روی یک خط‌مشی ضعیف‌تر است.
-فرض کنید $\pi'$ یک خط مشی قطعی باشد که نسبت به تابع ارزش عمل 
+فرض کنید $\pi'$ یک خط\nf مشی قطعی باشد که نسبت به تابع ارزش عمل 
 $q_\pi$
 حریصانه عمل می کند. به عبارت دیگر
-
 \begin{align*}
 	\pi'(s) \triangleq& arg\max_{a} q_\pi(s,a) \\
 	= & arg\max_{a} \mathbb{E}\left[R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t = s, A_t = a\right] \\
@@ -598,7 +595,7 @@ $$v_{\pi'}(s) \ge v_{\pi}(s).$$
 
 \شروع{الگوریتم}
 {الگوریتم بهبود خط‌مشی}
-\ورودی{ تابع  
+\ورودی{تقریبی از تابع ارزش حالت مربوط به خط\nf مشی $\pi$،
 	$V \approx v_\pi$
 }
 \به‌ازای{برای هر $s \in \EuScript{S}$}
@@ -740,13 +737,13 @@ $$\pi_0 \longrightarrow v_{\pi_0} \longrightarrow \pi_1 \longrightarrow v_{\pi_1
 \section{روش های یادگیری تفاوت زمانی}
 در بخش قبل، با روش‌های برنامه‌ریزی پویا آشنا شدیم. این روش‌ها علی‌رغم اهمیت فراون‌شان،
 برخلاف روش های برنامه\nf ریزی پویا، روش‌های 
-{یادگیری تفاوت زمانی} (TD) می‌توانند مستقیماً از تجربه خام بدون در اختیار داشتن مدلی از دینامیک محیط، یاد بگیرند. مانند DP، روش‌های TD، ارزش‌ها حالت  (حالت-عمل) را بر اساس تخمین‌های حالت‌(حالت-عمل)‌های دیگر به‌روز می‌کنند.
+{یادگیری تفاوت زمانی} (TD) می‌توانند مستقیماً از تجربه خام و بدون در اختیار داشتن مدلی از دینامیک محیط، یاد بگیرند. مانند برنامه\nf ریزی پویا، روش‌های تفاوت زمانی، ارزش‌ هر حالت (حالت-عمل) را بر اساس تخمین‌های حالت‌(حالت-عمل)‌های دیگر به‌روزرسانی می‌کنند.
 \\همانطور که دیدیم، ارزش یک حالت، امید ریاضی عایدی، با شروع از آن حالت است.
 $$v_\pi(s) \triangleq \mathbb{E}_\pi\left[G_t| S_t=s\right] = \mathbb{E}_\pi\left[\sum_{k=0}^{\infty} \gamma^k R_{t+k+1}|S_t =s \right]$$
 بنابراین، یک روش آشکار برای تخمین ارزش حالت $s$ از طریق تجربه، میانگین گرفتن تمام عایدی‌های تجربه شده در هر بار عبور از $s$ است.
 با تجربه بیشتر و مشاهده عایدی‌های بیشتر، میانگین آن‌ها باید به $v_\pi(s)$ همگرا شود.
-روش های تفاوت زمانی در ساده‌ترین حالت، بعد از عبور از هر حالت، ارزش آن حالت را با استفاده از ارزش حالت بعدی به عنوان تخمینی از عایدی، بلافاصله به‌روزرسانی می کنند
-$$V(S_t) \longleftarrow V(S_t) + \alpha\left[R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\right]$$
+روش های تفاوت زمانی در ساده‌ترین حالت، بعد از عبور از هر حالت، ارزش آن حالت را با استفاده از ارزش حالت بعدی به عنوان تخمینی از عایدی، بلافاصله به‌روزرسانی می\nf کنند
+$$V(S_t) \longleftarrow V(S_t) + \alpha\left[R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\right].$$
 
 \شروع{الگوریتم}{الگوریتم TD(0) برای تخمین $v_\pi$}
 \ورودی{خط‌مشی $\pi$}
@@ -760,13 +757,16 @@ $V(s) \longleftarrow V(s) + \alpha\left[r + \gamma V(s') - V(s)\right]$
 \دستور{
 	$s \longleftarrow s'$
 }
+\خروجی{
+	$V \approx v_\pi$
+}
 \پایان{الگوریتم}
 \subsection{روش های Q-learning}
 ایده اصلی در روش 
 Q-learning،
  تخمین تابع ارزش عمل  
 $q^*(s,a)$ 
-با استفاده از معادله بلمن به عنوان یک بروزرسانی تکراری به شکل زیر است:
+با استفاده از معادله بلمن به عنوان یک به\nf روزرسانی تکراری به شکل زیر است:
 $$q_{i+1}(s,a) = \mathbb{E}[r+ \gamma \max_{a'} q_i(s',a')|s,a].$$
 الگوریتم 
 \lr{Q-learning}،

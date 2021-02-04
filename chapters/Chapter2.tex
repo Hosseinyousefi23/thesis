@@ -600,33 +600,30 @@ v_{\pi'}(s) \ge v_\pi(s).
 \label{policyimptheorem}
 \پایان{قضیه}
 درستی قضیه بالا را می‌توان با استفاده از تعاریف، به روشنی بررسی کرد \cite{suttonbook}
-\begin{align*}
-v_\pi (s) \le & \ q_\pi (s,\pi'(s))  \\
- =& \  \mathbb{E}\left[R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t=s, A_t = \pi'(a)\right] \\
-= & \  \mathbb{E}_{\pi'}\left[R_{t+1}+\gamma v_\pi(s_{t+1}) | S_t=s\right] \\
- \le & \  \mathbb{E}_{\pi'}[R_{t+1}+ \gamma q_\pi(S_{t+1}, \pi'(S_{t+1})) | S_t=s] \\
-= & \ \mathbb{E}_{\pi'}[R_{t+1} + \gamma \mathbb{E}_{\pi'}[R_{t+2} + \gamma v_\pi(S_{t+2})] | S_t=s] \\
-\le & \ \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 v_\pi(s_{t+3}) | S_t=s] \\
-\vdots \\
-\le & \  \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 R_{t+4} + \dots | S_t=s] \\
+\begin{flalign*}
+v_\pi (s) \le & \ q_\pi (s,\pi'(s)) & \\
+ =& \  \mathbb{E}\left[R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t=s, A_t = \pi'(a)\right] & \\
+= & \  \mathbb{E}_{\pi'}\left[R_{t+1}+\gamma v_\pi(s_{t+1}) | S_t=s\right] & \\
+ \le & \  \mathbb{E}_{\pi'}[R_{t+1}+ \gamma q_\pi(S_{t+1}, \pi'(S_{t+1})) | S_t=s] & \\
+= & \ \mathbb{E}_{\pi'}[R_{t+1} + \gamma \mathbb{E}_{\pi'}[R_{t+2} + \gamma v_\pi(S_{t+2})] | S_t=s]& \\
+\le & \ \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 v_\pi(s_{t+3}) | S_t=s] & \\
+\vdots &\\
+\le & \  \mathbb{E}_{\pi'}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \gamma^3 R_{t+4} + \dots | S_t=s] &\\
 \le & \  v_{\pi'}(s).
-\end{align*}
+\end{flalign*}
 قضیه \ref{policyimptheorem} یک شرط کافی برای اینکه خط‌مشی $\pi'$ بهتر یا مساوی خط‌مشی $\pi$ باشد را بیان می‌کند. این قضیه می‌تواند ما را به روشی برای بهبود یک خط‌مشی، سوق دهد. منظور ما از بهبود خط‌مشی، روشی برای دستیابی به یک خط‌مشی بهتر، از روی یک خط‌مشی ضعیف‌تر است.
 فرض کنید $\pi'$ یک خط‌مشی قطعی باشد که نسبت به تابع ارزش عمل 
 $q_\pi$
 حریصانه عمل می کند. به عبارت دیگر;
-\begin{align*}
-\pi'(s) \doteq& \ arg\max_{a} q_\pi(s,a) \\
-= & \ arg\max_{a} \mathbb{E}\left[R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t = s, A_t = a\right] \\
-= & \ arg \max_{a} \sum_{s',r} p(s',r|s,a) \left[r + \gamma v_\pi(s')\right].
-\end{align*}
-
+\begin{flalign*}
+\pi'(s) \doteq& \ arg\max_{a} q_\pi(s,a) & \\ 
+= & \ arg\max_{a} \mathbb{E}\left[R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t = s, A_t = a\right]& \\
+= & \ arg \max_{a} \sum_{s',r} p(s',r|s,a) \left[r + \gamma v_\pi(s')\right]. 
+\end{flalign*}
 با استفاده از قضیه \ref{policyimptheorem} می توان نشان داد برای هر
 $s \in \EuScript{S}$:
 $$v_{\pi'}(s) \ge v_{\pi}(s).$$
 بنابراین با حریصانه عمل کردن نسبت به تابع ارزش خط‌مشی $\pi$ می‌توان به یک خط‌مشی بهتر رسید \cite{suttonbook}.
-
-
 \شروع{الگوریتم}
 {الگوریتم بهبود خط‌مشی \cite{suttonbook}}
 \ورودی{تقریبی از تابع ارزش حالت مربوط به خط‌مشی $\pi$،
@@ -639,7 +636,6 @@ $$v_{\pi'}(s) \ge v_{\pi}(s).$$
 \پایان‌به‌ازای
 \خروجی{$\pi'$}
 \پایان{الگوریتم}
-
 \subsection{الگوریتم تکرار خط‌مشی}
 تا اینجا روشی برای محاسبه تقریبی تابع ارزش حالت و همینطور روشی دستیابی به یک خط‌مشی بهتر با استفاده از تابع ارزش، ارائه دادیم. اما هدف ما دستیابی به خط‌مشی بهینه است. 
 برای این کار، با استفاده از ارزیابی خط‌مشی، روی یک خط‌مشی دلخواه $\pi_0$ به تخمینی از 
@@ -692,8 +688,6 @@ $$\pi_0 \longrightarrow v_{\pi_0} \longrightarrow \pi_1 \longrightarrow v_{\pi_1
 	$V_*, \pi_*$
 }
 \پایان{الگوریتم}
-
-
 \subsection{الگوریتم تکرار ارزش}
 یک اشکال در روش تکرار خط‌مشی این است که هر یک از تکرارهای آن، شامل ارزیابی خط‌مشی است که
 به خودی خود یک محاسبه زمان‌بر است و نیاز به رفت و برگشت‌های متعدد روی مجموعه حالت دارد. اگر
@@ -704,9 +698,6 @@ $$\pi_0 \longrightarrow v_{\pi_0} \longrightarrow \pi_1 \longrightarrow v_{\pi_1
 \LTRfootnote{Value Iteration}
  نامیده می‌شود. الگوریتم تکرار ارزش نسبت به تکرار خط‌مشی، گام های بیشتری تا رسیدن به همگرایی می پیماید اما به دلیل آنکه در هر گام تنها یک بار رفت و برگشت روی فضای حالت های اتفاق می افتد، در عمل سریع تر از تکرار خط‌مشی به همگرایی می‌رسد. این الگوریتم
 را می‌توان به عنوان یک عملیات بروزرسانی ساده نوشت که ترکیبی از بهبود خط‌مشی و ارزیابی خط‌مشی کوتاه شده است.
-
-
-
 \شروع{الگوریتم}
 {الگوریتم تکرار ارزش}
 \دستور{تابع ارزش 
@@ -729,26 +720,7 @@ $$\pi_0 \longrightarrow v_{\pi_0} \longrightarrow \pi_1 \longrightarrow v_{\pi_1
 	$V \approx V_*, \pi \approx \pi_*$
 }
 \پایان{الگوریتم}
-%One drawback to policy iteration is that each of its iterations involves policy evaluation, which may
-%itself be a protracted iterative computation requiring multiple sweeps through the state set. If policy
-%evaluation is done iteratively, then convergence exactly to vπ occurs only in the limit. Must we wait
-%for exact convergence, or can we stop short of that? The example in Figure 4.1 certainly suggests that
-%it may be possible to truncate policy evaluation. In that example, policy evaluation iterations beyond
-%the first three have no effect on the corresponding greedy policy.
-%In fact, the policy evaluation step of policy iteration can be truncated in several ways without losing
-%the convergence guarantees of policy iteration. One important special case is when policy evaluation
-%is stopped after just one sweep (one update of each state). This algorithm is called value iteration. It
-%can be written as a particularly simple update operation that combines the policy improvement and
-%truncated policy evaluation steps:
-
-
-%
-%for all s ∈ S. For arbitrary v0, the sequence {vk} can be shown to converge to v∗ under the same
-%conditions that guarantee the existence of v∗.
-
 \subsection{الگوریتم های تکرار خط‌مشی تعمیم یافته}
-
-
 %A major drawback to the DP methods that we have discussed so far is that they involve operations
 %over the entire state set of the MDP, that is, they require sweeps of the state set. If the state set is very
 %large, then even a single sweep can be prohibitively expensive

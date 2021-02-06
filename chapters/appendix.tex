@@ -1,6 +1,23 @@
 
-%\فصل{مطالب تکمیلی}
+\فصل{مطالب تکمیلی}
 %
 %پیوست‌های خود را در صورت وجود می‌توانید در این قسمت قرار دهید. 
+\section{ اثبات قضیه گرادیان خط‌مشی }
 
-
+\begin{flalign*}
+\nabla \nu_{\pi}(s) =& \nabla \left[ \sum_{a} \pi (a|s) q_{\pi} (s,a) \right] , \ for \ all \  s \in \EuScript{S} & \\
+=& \sum_{a} \left[ \nabla \pi (a|s) q_\pi (s,a)+ \pi (a|s) \nabla q_{\pi} (s,a) \right] & \\
+=& \sum_{a} \left[ \nabla \pi (a|s) q_{\pi} (s,a) + \pi (a|s) \nabla \sum_{s',r} p(s',r | s ,a)(r+\nu_{\pi}(s')) \right] \\
+=& \sum_{a} \left[ \nabla \pi (a|s) q_\pi (s,a) + \pi(a|s) \sum_{s'} p(s'|s,a) \nabla \nu_{\pi}(s') \right]\\
+=& \sum_{a} \left[ \nabla \pi (a|s) q_\pi (s,a) + \pi(a|s) \sum_{s'} p(s'|s,a)
+\sum_{a'} [ \nabla \pi (a',|s')q_{\pi} (s',a')+ \pi (a'|s') \sum_{s''}p(s''|s',a')\nabla \nu_{\pi}(s'')] \right] \\
+=& \sum_{x \in \EuScript{S}} \sum_{k=0}^{\infty} Pr (s \rightarrow x,k,\pi) \sum_{a} \nabla \pi (x|a) q_\pi (x,a), 
+\end{flalign*}
+..........................................................
+\begin{flalign*}
+\nabla J(\theta) =& \nabla \nu_{\pi} (s_0) &\\ 
+=& \sum_{s} \left( \sum_{k=0}^{\infty} Pr(s_0\rightarrow s, k, \pi) \right) \sum_{a} \nabla \pi (a|s) q_{\pi}(s,a) & \\
+=& \sum_{s} \eta(s) \sum_{a} \nabla \pi (a|s) q_{\pi} (s,a) &\\
+=& \left( \sum_{s} \eta (s) \right) \sum_{s} \frac{\eta(s)}{\sum_{s} \eta(s)} \sum_{a} \nabla \pi (a|s) q_{\pi} (s,a) & \\
+\propto & \sum_{s} \mu (s) \sum_{a} \nabla \pi (a|s) q_{\pi} (s,a).
+\end{flalign*}
